@@ -29,9 +29,10 @@ def root():
 
 
 @app.get("/news")
-def get_news(category: str = "general", language: str = "en", q: str = None):
+def get_news(category: str = "general", language: str = "en", q: str = None, pageSize: int = 12):
     url = "https://newsapi.org/v2/top-headlines"
-    params = {"apiKey": NEWS_API_KEY, "language": language, "pageSize": 12}
+    pageSize = max(1, min(pageSize, 50))
+    params = {"apiKey": NEWS_API_KEY, "language": language, "pageSize": pageSize}
     if category != "general":
         params["category"] = category
     if q:
